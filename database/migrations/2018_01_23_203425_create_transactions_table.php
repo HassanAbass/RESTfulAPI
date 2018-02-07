@@ -13,7 +13,7 @@ class CreateTransactionsTable extends Migration
      */
     public function up()
     {
-        /*
+
         Schema::create('transactions', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('quantity')->unsigned();
@@ -22,7 +22,7 @@ class CreateTransactionsTable extends Migration
             $table->timestamps();
             $table->foreign('buyer_id')->references('id')->on('users');
             $table->foreign('product_id')->references('id')->on('products');
-        });*/
+        });
     }
 
     /**
