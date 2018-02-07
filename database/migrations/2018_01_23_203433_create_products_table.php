@@ -9,6 +9,7 @@ class CreateProductsTable extends Migration
 
     public function up()
     {
+        /*
         Schema::create('products', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
@@ -19,7 +20,7 @@ class CreateProductsTable extends Migration
             $table->integer('seller_id')->unsigned();
             $table->timestamps();
             $table->foreign('seller_id')->references('id')->on('users');
-        });
+        });*/
     }
 
     /**
@@ -29,6 +30,6 @@ class CreateProductsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('products');
+        //Schema::dropIfExists('products');
     }
 }
