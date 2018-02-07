@@ -1,51 +1,77 @@
-<p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
 
-## About Laravel
+## About restfulAPI
+[**restfulapi**](http://resttfullapi.herokuapp.com) is simple Api that is based on laravel framework, using postgresql database .
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as:
+**- Authorization using Oauth2
+- Cover all the resource relations**
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications. A superb combination of simplicity, elegance, and innovation give you tools you need to build any application with which you are tasked.
+## Methods
+To access the application you need to get acquire 
+Personal Access Token through the web interface with specifying the proper
+scope Or get client secret key
+<pre>
++-----------+------------------------------------------------+------------------------------------+----------------------------------------------------------------------------+-------------------------------------------------------------------------+
+| Method    | URI                                            | Name                               | Action                                                                     | Middleware                                                              |
++--------+-----------+------------------------------------------------+------------------------------------+----------------------------------------------------------------------------+-------------------------------------------------------------------------+
+| GET|HEAD  | /                                              |                                    | Closure                                                                    | web,guest                                                               |
 
-## Learning Laravel
-
-Laravel has the most extensive and thorough documentation and video tutorial library of any modern web application framework. The [Laravel documentation](https://laravel.com/docs) is thorough, complete, and makes it a breeze to get started learning the framework.
-
-If you're not in the mood to read, [Laracasts](https://laracasts.com) contains over 900 video tutorials on a range of topics including Laravel, modern PHP, unit testing, JavaScript, and more. Boost the skill level of yourself and your entire team by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for helping fund on-going Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](http://patreon.com/taylorotwell):
-
-- **[Vehikl](http://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Styde](https://styde.net)**
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+| GET|HEAD  | buyers                                         | buyers.index                       | App\Http\Controllers\Buyer\BuyerController@index                           | api,auth:api                                                            |
+| GET|HEAD  | buyers/{buyer}                                 | buyers.show                        | App\Http\Controllers\Buyer\BuyerController@show                            | api,auth:api                                                            |
+| GET|HEAD  | buyers/{buyer}/categories                      | buyers.categories.index            | App\Http\Controllers\Buyer\BuyerCategoryController@index                   | api,auth:api                                                            |
+| GET|HEAD  | buyers/{buyer}/products                        | buyers.products.index              | App\Http\Controllers\Buyer\BuyerProductController@index                    | api,auth:api                                                            |
+| GET|HEAD  | buyers/{buyer}/sellers                         | buyers.sellers.index               | App\Http\Controllers\Buyer\BuyerSellerController@index                     | api,auth:api                                                            |
+| GET|HEAD  | buyers/{buyer}/transactions                    | buyers.transactions.index          | App\Http\Controllers\Buyer\BuyerTransactionController@index                | api,auth:api                                                            |
+| POST      | categories                                     | categories.store                   | App\Http\Controllers\Category\CategoryController@store                     | api,transform.input:App\Transformers\CategoryTransformer,auth:api       |
+| GET|HEAD  | categories                                     | categories.index                   | App\Http\Controllers\Category\CategoryController@index                     | api,client.credentials                                                  |
+| DELETE    | categories/{category}                          | categories.destroy                 | App\Http\Controllers\Category\CategoryController@destroy                   | api,auth:api                                                            |
+| PUT|PATCH | categories/{category}                          | categories.update                  | App\Http\Controllers\Category\CategoryController@update                    | api,transform.input:App\Transformers\CategoryTransformer,auth:api       |
+| GET|HEAD  | categories/{category}                          | categories.show                    | App\Http\Controllers\Category\CategoryController@show                      | api,client.credentials                                                  |
+| GET|HEAD  | categories/{category}/buyers                   | categories.buyers.index            | App\Http\Controllers\Category\CategoryBuyerController@index                | api,auth:api                                                            |
+| GET|HEAD  | categories/{category}/products                 | categories.products.index          | App\Http\Controllers\Category\CategoryProductController@index              | api,client.credentials                                                  |
+| GET|HEAD  | categories/{category}/sellers                  | categories.sellers.index           | App\Http\Controllers\Category\CategorySellerController@index               | api,auth:api                                                            |
+| GET|HEAD  | categories/{category}/transactions             | categories.transactions.index      | App\Http\Controllers\Category\CategoryTransactionController@index          | api,auth:api                                                            |
+| GET|HEAD  | home                                           | home                               | App\Http\Controllers\HomeController@index                                  | web,auth                                                                |
+| GET|HEAD  | home/authorized-clients                        | authorized-clients                 | App\Http\Controllers\HomeController@getAuthorizedClients                   | web,auth                                                                |
+| GET|HEAD  | home/my-clients                                | personal-clients                   | App\Http\Controllers\HomeController@getClients                             | web,auth                                                                |
+| GET|HEAD  | home/my-tokens                                 | personal-tokens                    | App\Http\Controllers\HomeController@getTokens                              | web,auth                                                                |
+| POST      | oauth/token                                    |                                    | \Laravel\Passport\Http\Controllers\AccessTokenController@issueToken        | api                                                                     |
+| POST      | oauth/token/refresh                            |                                    | \Laravel\Passport\Http\Controllers\TransientTokenController@refresh        | web,auth                                                                |
+| GET|HEAD  | oauth/tokens                                   |                                    | \Laravel\Passport\Http\Controllers\AuthorizedAccessTokenController@forUser | web,auth                                                                |
+| DELETE    | oauth/tokens/{token_id}                        |                                    | \Laravel\Passport\Http\Controllers\AuthorizedAccessTokenController@destroy | web,auth                                                                |
+| POST      | password/email                                 | password.email                     | App\Http\Controllers\Auth\ForgotPasswordController@sendResetLinkEmail      | web,guest                                                               |
+| POST      | password/reset                                 |                                    | App\Http\Controllers\Auth\ResetPasswordController@reset                    | web,guest                                                               |
+| GET|HEAD  | password/reset                                 | password.request                   | App\Http\Controllers\Auth\ForgotPasswordController@showLinkRequestForm     | web,guest                                                               |
+| GET|HEAD  | password/reset/{token}                         | password.reset                     | App\Http\Controllers\Auth\ResetPasswordController@showResetForm            | web,guest                                                               |
+| GET|HEAD  | products                                       | products.index                     | App\Http\Controllers\Product\ProductController@index                       | api,auth:api,client.credentials                                         |
+| GET|HEAD  | products/{product}                             | products.show                      | App\Http\Controllers\Product\ProductController@show                        | api,auth:api,client.credentials                                         |
+| GET|HEAD  | products/{product}/buyers                      | products.buyers.index              | App\Http\Controllers\Product\ProductBuyerController@index                  | api,auth:api                                                            |
+| POST      | products/{product}/buyers/{buyer}/transactions | products.buyers.transactions.store | App\Http\Controllers\Product\ProductBuyerTransactionController@store       | api,auth:api,transform.input:App\Transformers\ProductTransformer        |
+| POST      | products/{product}/categories                  | products.categories.store          | App\Http\Controllers\Product\ProductCategoryController@store               | api,auth:api                                                            |
+| GET|HEAD  | products/{product}/categories                  | products.categories.index          | App\Http\Controllers\Product\ProductCategoryController@index               | api,client.credentials                                                  |
+| PUT|PATCH | products/{product}/categories/{category}       | products.categories.update         | App\Http\Controllers\Product\ProductCategoryController@update              | api,auth:api                                                            |
+| DELETE    | products/{product}/categories/{category}       | products.categories.destroy        | App\Http\Controllers\Product\ProductCategoryController@destroy             | api,auth:api                                                            |
+| GET|HEAD  | products/{product}/transactions                | products.transactions.index        | App\Http\Controllers\Product\ProductTransactionController@index            | api,auth:api                                                            |
+| GET|HEAD  | sellers                                        | sellers.index                      | App\Http\Controllers\Seller\SellerController@index                         | api,auth:api                                                            |
+| GET|HEAD  | sellers/{seller}                               | sellers.show                       | App\Http\Controllers\Seller\SellerController@show                          | api,auth:api                                                            |
+| GET|HEAD  | sellers/{seller}/buyers                        | sellers.buyers.index               | App\Http\Controllers\Seller\SellerBuyerController@index                    | api,auth:api                                                            |
+| GET|HEAD  | sellers/{seller}/categories                    | sellers.categories.index           | App\Http\Controllers\Seller\SellerCategoryController@index                 | api,auth:api                                                            |
+| GET|HEAD  | sellers/{seller}/products                      | sellers.products.index             | App\Http\Controllers\Seller\SellerProductController@index                  | api,auth:api                                                            |
+| POST      | sellers/{seller}/products                      | sellers.products.store             | App\Http\Controllers\Seller\SellerProductController@store                  | api,auth:api,transform.input:App\Transformers\SellerTransformer         |
+| DELETE    | sellers/{seller}/products/{product}            | sellers.products.destroy           | App\Http\Controllers\Seller\SellerProductController@destroy                | api,auth:api                                                            |
+| PUT|PATCH | sellers/{seller}/products/{product}            | sellers.products.update            | App\Http\Controllers\Seller\SellerProductController@update                 | api,auth:api,transform.input:App\Transformers\SellerTransformer         |
+| GET|HEAD  | sellers/{seller}/transactions                  | sellers.transactions.index         | App\Http\Controllers\Seller\SellerTransactionController@index              | api,auth:api                                                            |
+| GET|HEAD  | transactions                                   | transactions.index                 | App\Http\Controllers\Transaction\TransactionController@index               | api,auth:api                                                            |
+| GET|HEAD  | transactions/{transaction}                     | transactions.show                  | App\Http\Controllers\Transaction\TransactionController@show                | api,auth:api                                                            |
+| GET|HEAD  | transactions/{transaction}/categories          | transactions.categories.index      | App\Http\Controllers\Transaction\TransactionCategoryController@index       | api,auth:api,client.credentials                                         |
+| GET|HEAD  | transactions/{transaction}/sellers             | transactions.sellers.index         | App\Http\Controllers\Transaction\TransactionSellerController@index         | api,auth:api                                                            |
+| GET|HEAD  | users                                          | users.index                        | App\Http\Controllers\User\UserController@index                             | api,auth:api                                                            |
+| POST      | users                                          | users.store                        | App\Http\Controllers\User\UserController@store                             | api,client.credentials,transform.input:App\Transformers\UserTransformer |
+| GET|HEAD  | users/verify/{token}                           | verify                             | App\Http\Controllers\User\UserController@verify                            | api                                                                     |
+| DELETE    | users/{user}                                   | users.destroy                      | App\Http\Controllers\User\UserController@destroy                           | api,auth:api                                                            |
+| PUT|PATCH | users/{user}                                   | users.update                       | App\Http\Controllers\User\UserController@update                            | api,auth:api,transform.input:App\Transformers\UserTransformer           |
+| GET|HEAD  | users/{user}                                   | users.show                         | App\Http\Controllers\User\UserController@show                              | api,auth:api                                                            |
+| GET|HEAD  | users/{user}/resend                            | resend                             | App\Http\Controllers\User\UserController@resend                            | api,client.credentials                                                  |
++-----------+------------------------------------------------+------------------------------------+----------------------------------------------------------------------------+-------------------------------------------------------------------------+
+</pre>
