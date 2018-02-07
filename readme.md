@@ -12,6 +12,7 @@ To access the application you need to get acquire
 Personal Access Token through the  interface with specifying the proper
 scope Or get client secret key
 
+
 <pre> 
 +-----------+------------------------------------------------+------------------
 | Method    | URI                                            | Middleware       
