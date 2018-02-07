@@ -1,0 +1,123 @@
++----------+-----------------------------------------------+----------------------------------------+
+| Method   | URI                                           | Action                                 |
++----------+-----------------------------------------------+----------------------------------------+
+| GET      | buyers                                        | BuyerController@index                  |
+| GET      | buyers/{buyer}                                | BuyerController@show                   |
+| GET      | buyers/{buyer}/categories                     | BuyerCategoryController@index          |
+| GET      | buyers/{buyer}/products                       | BuyerProductController@index           |
+| GET      | buyers/{buyer}/sellers                        | BuyerSellerController@index            |
+| GET      | buyers/{buyer}/transactions                   | BuyerTransactionController@index       |
+| POST     | categories                                    | CategoryController@store               |
+| GET      | categories                                    | CategoryController@index               |
+| PUT|PATCH| categories/{category}                         | CategoryController@update              |
+| DELETE   | categories/{category}                         | CategoryController@destroy             |
+| GET      | categories/{category}                         | CategoryController@show                |
+| GET      | categories/{category}/buyers                  | CategoryBuyerController@index          |
+| GET      | categories/{category}/products                | CategoryProductController@index        |
+| GET      | categories/{category}/sellers                 | CategorySellerController@index         |
+| GET      | categories/{category}/transactions            | CategoryTransactionController@index    |
+| GET      | products                                      | ProductController@index                |
+| GET      | products/{product}                            | ProductController@show                 |
+| GET      | products/{product}/buyers                     | ProductBuyerController@index           |
+| POST     | products/{product}/buyers/{buyer}/transactions| ProductBuyerTransactionController@store|
+| GET      | products/{product}/categories                 | ProductCategoryController@index        |
+| DELETE   | products/{product}/categories/{category}      | ProductCategoryController@destroy      |
+| PUT|PATCH| products/{product}/categories/{category}      | ProductCategoryController@update       |
+| GET      | products/{product}/transactions               | ProductTransactionController@index     |
+| GET      | sellers                                       | SellerController@index                 |
+| GET      | sellers/{seller}                              | SellerController@show                  |
+| GET      | sellers/{seller}/buyers                       | SellerBuyerController@index            |
+| GET      | sellers/{seller}/categories                   | SellerCategoryController@index         |
+| GET      | sellers/{seller}/products                     | SellerProductController@index          |
+| POST     | sellers/{seller}/products                     | SellerProductController@store          |
+| DELETE   | sellers/{seller}/products/{product}           | SellerProductController@destroy        |
+| PUT|PATCH| sellers/{seller}/products/{product}           | SellerProductController@update         |
+| GET      | sellers/{seller}/transactions                 | SellerTransactionController@index      |
+| GET      | transactions                                  | TransactionController@index            |
+| GET      | transactions/{transaction}                    | TransactionController@show             |
+| GET      | transactions/{transaction}/categories         | TransactionCategoryController@index    |
+| GET      | transactions/{transaction}/sellers            | TransactionSellerController@index      |
+| POST     | users                                         | UserController@store                   |
+| GET      | users                                         | UserController@index                   |
+| GET      | users/verify/{token}                          | UserController@verify                  |
+| DELETE   | users/{user}                                  | UserController@destroy                 |
+| PUT|PATCH| users/{user}                                  | UserController@update                  |
+| GET      | users/{user}                                  | UserController@show                    |
+| GET      | users/{user}/resend                           | UserController@resend                  |
++---------+-----------------------------------------------+----------------------------------------+
+
++-----------+------------------------------------------------+------------------------------------+----------------------------------------------------------------------------+-------------------------------------------------------------------------+
+| Method    | URI                                            | Name                               | Action                                                                     | Middleware                                                              |
++--------+-----------+------------------------------------------------+------------------------------------+----------------------------------------------------------------------------+-------------------------------------------------------------------------+
+| GET|HEAD  | /                                              |                                    | Closure                                                                    | web,guest                                                               |
+| GET|HEAD  | buyers                                         | buyers.index                       | App\Http\Controllers\Buyer\BuyerController@index                           | api,auth:api                                                            |
+| GET|HEAD  | buyers/{buyer}                                 | buyers.show                        | App\Http\Controllers\Buyer\BuyerController@show                            | api,auth:api                                                            |
+| GET|HEAD  | buyers/{buyer}/categories                      | buyers.categories.index            | App\Http\Controllers\Buyer\BuyerCategoryController@index                   | api,auth:api                                                            |
+| GET|HEAD  | buyers/{buyer}/products                        | buyers.products.index              | App\Http\Controllers\Buyer\BuyerProductController@index                    | api,auth:api                                                            |
+| GET|HEAD  | buyers/{buyer}/sellers                         | buyers.sellers.index               | App\Http\Controllers\Buyer\BuyerSellerController@index                     | api,auth:api                                                            |
+| GET|HEAD  | buyers/{buyer}/transactions                    | buyers.transactions.index          | App\Http\Controllers\Buyer\BuyerTransactionController@index                | api,auth:api                                                            |
+| POST      | categories                                     | categories.store                   | App\Http\Controllers\Category\CategoryController@store                     | api,transform.input:App\Transformers\CategoryTransformer,auth:api       |
+| GET|HEAD  | categories                                     | categories.index                   | App\Http\Controllers\Category\CategoryController@index                     | api,client.credentials                                                  |
+| DELETE    | categories/{category}                          | categories.destroy                 | App\Http\Controllers\Category\CategoryController@destroy                   | api,auth:api                                                            |
+| PUT|PATCH | categories/{category}                          | categories.update                  | App\Http\Controllers\Category\CategoryController@update                    | api,transform.input:App\Transformers\CategoryTransformer,auth:api       |
+| GET|HEAD  | categories/{category}                          | categories.show                    | App\Http\Controllers\Category\CategoryController@show                      | api,client.credentials                                                  |
+| GET|HEAD  | categories/{category}/buyers                   | categories.buyers.index            | App\Http\Controllers\Category\CategoryBuyerController@index                | api,auth:api                                                            |
+| GET|HEAD  | categories/{category}/products                 | categories.products.index          | App\Http\Controllers\Category\CategoryProductController@index              | api,client.credentials                                                  |
+| GET|HEAD  | categories/{category}/sellers                  | categories.sellers.index           | App\Http\Controllers\Category\CategorySellerController@index               | api,auth:api                                                            |
+| GET|HEAD  | categories/{category}/transactions             | categories.transactions.index      | App\Http\Controllers\Category\CategoryTransactionController@index          | api,auth:api                                                            |
+| GET|HEAD  | home                                           | home                               | App\Http\Controllers\HomeController@index                                  | web,auth                                                                |
+| GET|HEAD  | home/authorized-clients                        | authorized-clients                 | App\Http\Controllers\HomeController@getAuthorizedClients                   | web,auth                                                                |
+| GET|HEAD  | home/my-clients                                | personal-clients                   | App\Http\Controllers\HomeController@getClients                             | web,auth                                                                |
+| GET|HEAD  | home/my-tokens                                 | personal-tokens                    | App\Http\Controllers\HomeController@getTokens                              | web,auth                                                                |
+| POST      | login                                          |                                    | App\Http\Controllers\Auth\LoginController@login                            | web,guest                                                               |
+| GET|HEAD  | login                                          | login                              | App\Http\Controllers\Auth\LoginController@showLoginForm                    | web,guest                                                               |
+| POST      | logout                                         | logout                             | App\Http\Controllers\Auth\LoginController@logout                           | web                                                                     |
+| POST      | oauth/authorize                                |                                    | \Laravel\Passport\Http\Controllers\ApproveAuthorizationController@approve  | web,auth                                                                |
+| DELETE    | oauth/authorize                                |                                    | \Laravel\Passport\Http\Controllers\DenyAuthorizationController@deny        | web,auth                                                                |
+| GET|HEAD  | oauth/authorize                                |                                    | \Laravel\Passport\Http\Controllers\AuthorizationController@authorize       | web,auth                                                                |
+| POST      | oauth/clients                                  |                                    | \Laravel\Passport\Http\Controllers\ClientController@store                  | web,auth                                                                |
+| GET|HEAD  | oauth/clients                                  |                                    | \Laravel\Passport\Http\Controllers\ClientController@forUser                | web,auth                                                                |
+| DELETE    | oauth/clients/{client_id}                      |                                    | \Laravel\Passport\Http\Controllers\ClientController@destroy                | web,auth                                                                |
+| PUT       | oauth/clients/{client_id}                      |                                    | \Laravel\Passport\Http\Controllers\ClientController@update                 | web,auth                                                                |
+| POST      | oauth/personal-access-tokens                   |                                    | \Laravel\Passport\Http\Controllers\PersonalAccessTokenController@store     | web,auth                                                                |
+| GET|HEAD  | oauth/personal-access-tokens                   |                                    | \Laravel\Passport\Http\Controllers\PersonalAccessTokenController@forUser   | web,auth                                                                |
+| DELETE    | oauth/personal-access-tokens/{token_id}        |                                    | \Laravel\Passport\Http\Controllers\PersonalAccessTokenController@destroy   | web,auth                                                                |
+| GET|HEAD  | oauth/scopes                                   |                                    | \Laravel\Passport\Http\Controllers\ScopeController@all                     | web,auth                                                                |
+| POST      | oauth/token                                    |                                    | \Laravel\Passport\Http\Controllers\AccessTokenController@issueToken        | api                                                                     |
+| POST      | oauth/token/refresh                            |                                    | \Laravel\Passport\Http\Controllers\TransientTokenController@refresh        | web,auth                                                                |
+| GET|HEAD  | oauth/tokens                                   |                                    | \Laravel\Passport\Http\Controllers\AuthorizedAccessTokenController@forUser | web,auth                                                                |
+| DELETE    | oauth/tokens/{token_id}                        |                                    | \Laravel\Passport\Http\Controllers\AuthorizedAccessTokenController@destroy | web,auth                                                                |
+| POST      | password/email                                 | password.email                     | App\Http\Controllers\Auth\ForgotPasswordController@sendResetLinkEmail      | web,guest                                                               |
+| POST      | password/reset                                 |                                    | App\Http\Controllers\Auth\ResetPasswordController@reset                    | web,guest                                                               |
+| GET|HEAD  | password/reset                                 | password.request                   | App\Http\Controllers\Auth\ForgotPasswordController@showLinkRequestForm     | web,guest                                                               |
+| GET|HEAD  | password/reset/{token}                         | password.reset                     | App\Http\Controllers\Auth\ResetPasswordController@showResetForm            | web,guest                                                               |
+| GET|HEAD  | products                                       | products.index                     | App\Http\Controllers\Product\ProductController@index                       | api,auth:api,client.credentials                                         |
+| GET|HEAD  | products/{product}                             | products.show                      | App\Http\Controllers\Product\ProductController@show                        | api,auth:api,client.credentials                                         |
+| GET|HEAD  | products/{product}/buyers                      | products.buyers.index              | App\Http\Controllers\Product\ProductBuyerController@index                  | api,auth:api                                                            |
+| POST      | products/{product}/buyers/{buyer}/transactions | products.buyers.transactions.store | App\Http\Controllers\Product\ProductBuyerTransactionController@store       | api,auth:api,transform.input:App\Transformers\ProductTransformer        |
+| POST      | products/{product}/categories                  | products.categories.store          | App\Http\Controllers\Product\ProductCategoryController@store               | api,auth:api                                                            |
+| GET|HEAD  | products/{product}/categories                  | products.categories.index          | App\Http\Controllers\Product\ProductCategoryController@index               | api,client.credentials                                                  |
+| PUT|PATCH | products/{product}/categories/{category}       | products.categories.update         | App\Http\Controllers\Product\ProductCategoryController@update              | api,auth:api                                                            |
+| DELETE    | products/{product}/categories/{category}       | products.categories.destroy        | App\Http\Controllers\Product\ProductCategoryController@destroy             | api,auth:api                                                            |
+| GET|HEAD  | products/{product}/transactions                | products.transactions.index        | App\Http\Controllers\Product\ProductTransactionController@index            | api,auth:api                                                            |
+| GET|HEAD  | sellers                                        | sellers.index                      | App\Http\Controllers\Seller\SellerController@index                         | api,auth:api                                                            |
+| GET|HEAD  | sellers/{seller}                               | sellers.show                       | App\Http\Controllers\Seller\SellerController@show                          | api,auth:api                                                            |
+| GET|HEAD  | sellers/{seller}/buyers                        | sellers.buyers.index               | App\Http\Controllers\Seller\SellerBuyerController@index                    | api,auth:api                                                            |
+| GET|HEAD  | sellers/{seller}/categories                    | sellers.categories.index           | App\Http\Controllers\Seller\SellerCategoryController@index                 | api,auth:api                                                            |
+| GET|HEAD  | sellers/{seller}/products                      | sellers.products.index             | App\Http\Controllers\Seller\SellerProductController@index                  | api,auth:api                                                            |
+| POST      | sellers/{seller}/products                      | sellers.products.store             | App\Http\Controllers\Seller\SellerProductController@store                  | api,auth:api,transform.input:App\Transformers\SellerTransformer         |
+| DELETE    | sellers/{seller}/products/{product}            | sellers.products.destroy           | App\Http\Controllers\Seller\SellerProductController@destroy                | api,auth:api                                                            |
+| PUT|PATCH | sellers/{seller}/products/{product}            | sellers.products.update            | App\Http\Controllers\Seller\SellerProductController@update                 | api,auth:api,transform.input:App\Transformers\SellerTransformer         |
+| GET|HEAD  | sellers/{seller}/transactions                  | sellers.transactions.index         | App\Http\Controllers\Seller\SellerTransactionController@index              | api,auth:api                                                            |
+| GET|HEAD  | transactions                                   | transactions.index                 | App\Http\Controllers\Transaction\TransactionController@index               | api,auth:api                                                            |
+| GET|HEAD  | transactions/{transaction}                     | transactions.show                  | App\Http\Controllers\Transaction\TransactionController@show                | api,auth:api                                                            |
+| GET|HEAD  | transactions/{transaction}/categories          | transactions.categories.index      | App\Http\Controllers\Transaction\TransactionCategoryController@index       | api,auth:api,client.credentials                                         |
+| GET|HEAD  | transactions/{transaction}/sellers             | transactions.sellers.index         | App\Http\Controllers\Transaction\TransactionSellerController@index         | api,auth:api                                                            |
+| GET|HEAD  | users                                          | users.index                        | App\Http\Controllers\User\UserController@index                             | api,auth:api                                                            |
+| POST      | users                                          | users.store                        | App\Http\Controllers\User\UserController@store                             | api,client.credentials,transform.input:App\Transformers\UserTransformer |
+| GET|HEAD  | users/verify/{token}                           | verify                             | App\Http\Controllers\User\UserController@verify                            | api                                                                     |
+| DELETE    | users/{user}                                   | users.destroy                      | App\Http\Controllers\User\UserController@destroy                           | api,auth:api                                                            |
+| PUT|PATCH | users/{user}                                   | users.update                       | App\Http\Controllers\User\UserController@update                            | api,auth:api,transform.input:App\Transformers\UserTransformer           |
+| GET|HEAD  | users/{user}                                   | users.show                         | App\Http\Controllers\User\UserController@show                              | api,auth:api                                                            |
+| GET|HEAD  | users/{user}/resend                            | resend                             | App\Http\Controllers\User\UserController@resend                            | api,client.credentials                                                  |
++-----------+------------------------------------------------+------------------------------------+----------------------------------------------------------------------------+-------------------------------------------------------------------------+
