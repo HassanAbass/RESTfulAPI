@@ -4,8 +4,8 @@
 <a href="http://resttfullapi.herokuapp.com/" target="_blank">**RESTFULAPI**</a> 
 is simple  that is based on laravel framework, using postgresql database .
 
-**- Authorization using Oauth2
-- Cover all the resource relations**
+- Authorization using Oauth2
+- Cover all the resource relations
 
 
 ## Methods
